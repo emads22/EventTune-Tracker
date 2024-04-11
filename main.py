@@ -1,14 +1,14 @@
 import requests
 import selectorlib
-from pathlib import Path
+import time
+import logging
+from app_logging import handle_logging
+from send_email import send_email
+from constants import *
 
 
-URL = "http://programmer100.pythonanywhere.com/tours/"
-HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
-ASSETS_DIR = Path("./assets")
-YAML_FILE = ASSETS_DIR / "Selectors" / "selectors.yaml"
-TOURS_FILE = ASSETS_DIR / "Tours" / "tours.txt"
+# Set up logging using the custom handler
+handle_logging()
 
 
 def scrape(url):
@@ -100,22 +100,45 @@ def main():
 
     This function initiates the scraping process, extracts tour data, and stores it in a file or SQL database.
     """
-    # Step 1: Scrape data from the specified URL
-    scraped_data = scrape(URL)
+    try:
+        # Step 1: Scrape data from the specified URL
+        scraped_data = scrape(URL)
 
-    # Step 2: Extract tour data from the scraped content
-    extracted_data = extract(scraped_data)
+        # Step 2: Extract tour data from the scraped content
+        extracted_data = extract(scraped_data)
 
-    # Step 3: Call store function to save the tour data
-    success, message = store(extracted_data)
+        # Step 3: Call store function to save the tour data
+        success, message = store(extracted_data)
 
-    # Check if the tour data was saved successfully
-    if success:
-        print("\n- Tour data saved successfully.\n- Send Email.\n")
-    else:
-        print(f"\n- Tour data not saved.\n- Reason: {message}\n")
+        # Check if the tour data was saved successfully
+        if success:
+            logging.info("Tour data saved successfully.")
+
+            if send_email(extracted_data):
+                logging.info("Email sent successfully.")
+            else:
+                logging.error("Failed to send email. Please try again later.")
+        else:
+            logging.error(f"Tour data not saved. Reason: {message}")
+    except Exception as e:
+        logging.error(f"An error occurred: {e}")
 
 
 # Entry point of the program
 if __name__ == "__main__":
-    main()
+    # Get the start time in seconds since the epoch
+    start = time.time()
+
+    # Loop until DURATION in seconds have passed as a trial of running program non-stop
+    # we can also use automation on:  https://www.pythonanywhere.com/
+    while True:
+        # If the current time is more than DURATION in seconds ahead of the starting time, exit the loop
+        if time.time() > start + DURATION:
+            print(f"\nExiting Program: {DURATION} seconds have passed.\n")
+            break
+
+        # Call the main function
+        main()
+
+        # Pause execution for PAUSE seconds
+        time.sleep(PAUSE)
