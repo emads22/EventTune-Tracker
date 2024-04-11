@@ -133,12 +133,12 @@ def store_in_db(data):
 
         # Return success (True) and no error message
         return True, None
-    
+
     except sqlite3.Error as e:
         # Handle SQLite errors separately
         connection.rollback()  # Rollback the transaction
         return False, f"SQLite Error: {str(e)}"
-    
+
     except Exception as e:
         # Return failure (False) and the error message
         return False, str(e)
@@ -195,3 +195,6 @@ if __name__ == "__main__":
 
         # Pause execution for PAUSE seconds
         time.sleep(PAUSE)
+
+    # Finally close the database connection
+    connection.close()
