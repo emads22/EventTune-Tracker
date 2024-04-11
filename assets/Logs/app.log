@@ -70,3 +70,8 @@ smtplib.SMTPAuthenticationError: (535, b'5.7.8 Username and Password not accepte
 2024-04-11 16:12:06,018 - ERROR - root - Tour data not saved. Reason: No upcoming tours
 2024-04-11 16:12:08,346 - ERROR - root - Tour data not saved. Reason: No upcoming tours
 2024-04-11 16:12:31,384 - ERROR - root - An error occurred: HTTPConnectionPool(host='programmer100.pythonanywhere.com', port=80): Max retries exceeded with url: /tours/ (Caused by ConnectTimeoutError(<urllib3.connection.HTTPConnection object at 0x000002159AE21F70>, 'Connection to programmer100.pythonanywhere.com timed out. (connect timeout=None)'))
+2024-04-11 16:23:37,207 - INFO - root - Tour data saved successfully.
+2024-04-11 16:23:39,250 - INFO - root - Email sent successfully.
+2024-04-11 16:23:41,556 - ERROR - root - Tour data not saved. Reason: No upcoming tours
+2024-04-11 16:23:43,954 - ERROR - root - Tour data not saved. Reason: No upcoming tours
+2024-04-11 16:23:46,347 - ERROR - root - Tour data not saved. Reason: No upcoming tours

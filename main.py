@@ -23,8 +23,8 @@ def scrape(url):
 
     """
     # Send a GET request to the URL to retrieve the webpage's HTML content
-    # Note: 'headers' parameter is optional, depending on the website's requirements
-    response = requests.get(url, headers=HEADERS)
+    # Note: 'headers' parameter is optional, depending on the website's requirements (requests.get(url,headers=HEADERS))
+    response = requests.get(url)
 
     # Extract the HTML source code from the response
     html_source = response.text
@@ -134,7 +134,7 @@ if __name__ == "__main__":
     while True:
         # If the current time is more than DURATION in seconds ahead of the starting time, exit the loop
         if time.time() > start + DURATION:
-            print(f"\nExiting Program: {DURATION} seconds have passed.\n")
+            print(f"\n- Exiting Program: {DURATION} seconds have passed.\n")
             break
 
         # Call the main function
