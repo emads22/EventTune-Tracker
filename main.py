@@ -2,6 +2,7 @@ import requests
 import selectorlib
 import time
 import logging
+import sqlite3
 from app_logging import handle_logging
 from send_email import send_email
 from constants import *
@@ -9,6 +10,9 @@ from constants import *
 
 # Set up logging using the custom handler
 handle_logging()
+
+# Establish the database connection
+connection = sqlite3.connect(DATABASE)
 
 
 def scrape(url):
@@ -54,7 +58,7 @@ def extract(source_text):
     return extracted_tours
 
 
-def store(data):
+def store_in_file(data):
     """
     Save tour data to the tours file.
 
@@ -94,6 +98,52 @@ def store(data):
         return False, str(e)
 
 
+def store_in_db(data):
+    """
+    Store tour event data in the database.
+
+    Args:
+        data (str): A string containing information about the tour event in the format 'band, city, date'.
+
+    Returns:
+        tuple: A tuple indicating success or failure of the operation along with an optional error message.
+               The tuple has the format (success(bool), error_message(str)).
+    """
+    try:
+        # Check if the input data indicates no upcoming tours
+        if "No upcoming tours" in data:
+            return False, "No upcoming tours"
+
+        # Get cursor object to execute SQL queries
+        cursor = connection.cursor()
+
+        # Retrieve all rows from the database
+        cursor.execute(READ_ALL_ROWS_QUERY)
+        all_rows = cursor.fetchall()
+
+        # Split the input data string into band, city, and date, and create a tuple (band, city, date) as a row
+        row = tuple(item.strip() for item in data.split(','))
+
+        # Check if this row is already present in the database
+        if row not in all_rows:
+            cursor.execute(INSERT_ROW_QUERY, row)
+            connection.commit()
+        else:
+            return False, "Tour event already exists"
+
+        # Return success (True) and no error message
+        return True, None
+    
+    except sqlite3.Error as e:
+        # Handle SQLite errors separately
+        connection.rollback()  # Rollback the transaction
+        return False, f"SQLite Error: {str(e)}"
+    
+    except Exception as e:
+        # Return failure (False) and the error message
+        return False, str(e)
+
+
 def main():
     """
     Main function to orchestrate the scraping, extraction, and saving of tour data.
@@ -107,8 +157,11 @@ def main():
         # Step 2: Extract tour data from the scraped content
         extracted_data = extract(scraped_data)
 
-        # Step 3: Call store function to save the tour data
-        success, message = store(extracted_data)
+        # # Step 3: Call store function to save the tour data in a file
+        # success, message = store_in_file(extracted_data)
+
+        # Step 3: Call store function to save the tour data in a database
+        success, message = store_in_db(extracted_data)
 
         # Check if the tour data was saved successfully
         if success:

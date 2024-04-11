@@ -11,12 +11,12 @@ from constants import SMTP_HOST, SMTP_PORT, SENDER, PASSWORD, RECEIVER
 handle_logging()
 
 
-def send_email(new_tour):
+def send_email(new_event):
     """
     Send an email notification about a new tour event.
 
     Args:
-        new_tour (str): A string containing information about the new tour in the format 'Tour Name, Location, Date'.
+        new_event (str): A string containing information about the new tour in the format 'Band, City, Date'.
 
     Returns:
         bool: True if the email was successfully sent, False otherwise.
@@ -27,11 +27,12 @@ def send_email(new_tour):
     # Set email subject
     email_message["Subject"] = "New Tour Event coming up!"
 
-    # Split the input data string into tour name, location, and date
-    tour_name, location, date = new_tour.split(', ')
+    # Split the input data string into band, city, and date
+    band, city, date = new_event.split(',')
 
     # Format the tour data into a readable format
-    formatted_data = f'- New tour event on {date} in {location}: {tour_name}'
+    formatted_data = f'- New tour event on {date.strip()} in {city.strip()}: {
+        band.strip()}'
 
     # Set email content
     email_message.set_content(formatted_data)
