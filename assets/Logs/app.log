@@ -5,3 +5,14 @@
 2024-04-11 20:54:26,277 - ERROR - root - Tour data not saved. Reason: No upcoming tours
 2024-04-11 20:54:28,604 - INFO - root - Tour data saved successfully.
 2024-04-11 20:54:30,348 - INFO - root - Email sent successfully.
+2024-04-23 19:08:54,024 - ERROR - root - Tour data not saved. Reason: Tour event already exists
+2024-04-23 19:08:56,480 - ERROR - root - Tour data not saved. Reason: No upcoming tours
+2024-04-23 19:08:58,875 - ERROR - root - Tour data not saved. Reason: No upcoming tours
+2024-04-23 19:09:01,224 - ERROR - root - Tour data not saved. Reason: Tour event already exists
+2024-04-23 19:09:03,644 - ERROR - root - Tour data not saved. Reason: No upcoming tours
+2024-04-23 19:11:05,625 - INFO - root - Tour data saved successfully.
+2024-04-23 19:11:07,710 - INFO - root - Email sent successfully.
+2024-04-23 19:11:10,106 - ERROR - root - Tour data not saved. Reason: No upcoming tours
+2024-04-23 19:11:12,454 - ERROR - root - Tour data not saved. Reason: No upcoming tours
+2024-04-23 19:11:14,941 - INFO - root - Tour data saved successfully.
+2024-04-23 19:11:16,723 - INFO - root - Email sent successfully.

@@ -14,6 +14,9 @@ def handle_logging():
     Returns:
         None
     """
+    # Define the logging format
+    log_format = '%(asctime)s - %(levelname)s - %(name)s - %(message)s'
+
     # Define the path to the log file: ASSETS_DIR/Logs/app.log
     log_file = ASSETS_DIR / "Logs" / "app.log"
 
@@ -21,8 +24,12 @@ def handle_logging():
         # Ensure the directory for log files exists, create if not
         log_file.parent.mkdir(parents=True, exist_ok=True)
     except OSError as e:
-        # Log an error if directory creation fails
-        print(f"Error creating log directory: {e}")
+        # If directory creation fails, log the error to a temporary default location
+        temp_log_file = Path("./log_dir_error.log")
+        logging.basicConfig(filename=temp_log_file,
+                            level=logging.ERROR, format=log_format)
+        logging.error(f"Error creating log directory: {e}")
+        return
 
     # Calculate the maximum size of each log file (10 MB)
     max_bytes = 10 * 1024 * 1024  # 10 MB
@@ -33,9 +40,6 @@ def handle_logging():
     # Create a RotatingFileHandler instance to handle log rotation
     handler = RotatingFileHandler(
         log_file, maxBytes=max_bytes, backupCount=backup_count)
-
-    # Define the logging format
-    log_format = '%(asctime)s - %(levelname)s - %(name)s - %(message)s'
 
     # Configure the root logger with the specified handler
     logging.basicConfig(level=logging.INFO,
