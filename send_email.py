@@ -4,7 +4,7 @@ from email.message import EmailMessage
 from pathlib import Path
 import logging
 from app_logging import handle_logging
-from constants import SMTP_HOST, SMTP_PORT, SENDER, PASSWORD, RECEIVER
+from constants import SMTP_HOST, SMTP_PORT, SENDER, PASSWORD, RECEIVER, EMAIL_SUBJECT
 
 
 # Set up logging using the custom handler
@@ -25,7 +25,7 @@ def send_email(new_event):
     email_message = EmailMessage()
 
     # Set email subject
-    email_message["Subject"] = "New Tour Event coming up!"
+    email_message["Subject"] = EMAIL_SUBJECT
 
     # Split the input data string into band, city, and date
     band, city, date = new_event.split(',')
@@ -62,6 +62,6 @@ if __name__ == "__main__":
     test_file_path = Path("./assets") / "Tours" / "tours.txt"
 
     if send_email(test_file_path):
-        print("\nEmail sent successfully.\n")
+        print("\n--- Email sent successfully. ---\n")
     else:
-        print("\nFailed to send email. Please try again later.\n")
+        print("\n--- Failed to send email. Please try again later. ---\n")
