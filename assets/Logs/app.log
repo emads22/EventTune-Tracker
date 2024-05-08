@@ -16,3 +16,26 @@
 2024-04-23 19:11:12,454 - ERROR - root - Tour data not saved. Reason: No upcoming tours
 2024-04-23 19:11:14,941 - INFO - root - Tour data saved successfully.
 2024-04-23 19:11:16,723 - INFO - root - Email sent successfully.
+2024-05-08 17:09:30,323 - ERROR - root - Tour data not saved. Reason: Expecting value: line 1 column 1 (char 0)
+2024-05-08 17:09:34,134 - ERROR - root - Tour data not saved. Reason: Expecting value: line 1 column 1 (char 0)
+2024-05-08 17:09:38,537 - ERROR - root - Tour data not saved. Reason: Expecting value: line 1 column 1 (char 0)
+2024-05-08 17:12:13,490 - ERROR - root - Tour data not saved. Reason: Expecting value: line 1 column 1 (char 0)
+2024-05-08 17:12:19,226 - ERROR - root - Tour data not saved. Reason: Expecting value: line 1 column 1 (char 0)
+2024-05-08 17:13:59,593 - ERROR - root - Tour data not saved. Reason: Expecting value: line 1 column 1 (char 0)
+2024-05-08 17:15:22,912 - ERROR - root - Tour data not saved. Reason: Expecting value: line 1 column 1 (char 0)
+2024-05-08 17:15:47,954 - ERROR - root - Tour data not saved. Reason: Expecting value: line 1 column 1 (char 0)
+2024-05-08 17:16:30,742 - ERROR - root - Tour data not saved. Reason: Expecting value: line 1 column 1 (char 0)
+2024-05-08 17:16:48,437 - ERROR - root - Tour data not saved. Reason: Expecting value: line 1 column 1 (char 0)
+2024-05-08 17:17:51,727 - ERROR - root - Tour data not saved. Reason: Expecting value: line 1 column 1 (char 0)
+2024-05-08 17:23:47,306 - ERROR - root - Tour data not saved. Reason: Expecting value: line 1 column 1 (char 0)
+2024-05-08 17:25:46,578 - ERROR - root - Tour data not saved. Reason: 'tours'
+2024-05-08 17:27:17,903 - ERROR - root - Tour data not saved. Reason: 'tours'
+2024-05-08 17:27:34,194 - ERROR - root - Tour data not saved. Reason: 'tours'
+2024-05-08 17:28:01,786 - ERROR - root - Tour data not saved. Reason: 'tours'
+2024-05-08 17:29:01,780 - ERROR - root - Tour data not saved. Reason: 'tours'
+2024-05-08 17:32:00,835 - INFO - root - Tour data saved successfully.
+2024-05-08 17:33:43,963 - ERROR - root - Tour data not saved. Reason: list indices must be integers or slices, not str
+2024-05-08 17:35:44,935 - INFO - root - Tour data saved successfully.
+2024-05-08 17:36:38,154 - INFO - root - Tour data saved successfully.
+2024-05-08 17:36:42,053 - INFO - root - Tour data saved successfully.
+2024-05-08 17:36:46,154 - INFO - root - Tour data saved successfully.

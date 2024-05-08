@@ -1,11 +1,14 @@
 import requests
 import selectorlib
 import time
+from datetime import datetime, timedelta
+import json
 import logging
 import sqlite3
 from app_logging import handle_logging
 from send_email import send_email
 from constants import *
+import t
 
 
 # Set up logging using the custom handler
@@ -23,17 +26,19 @@ def scrape(url):
         url (str): The URL of the webpage to scrape.
 
     Returns:
-        str: The HTML source code of the webpage.
-
+        str: The HTML source code of the webpage, or None if an error occurs.
     """
-    # Send a GET request to the URL to retrieve the webpage's HTML content
-    # Note: 'headers' parameter is optional, depending on the website's requirements (requests.get(url,headers=HEADERS))
-    response = requests.get(url)
+    try:
+        # Send a GET request to the URL to retrieve the webpage's HTML content
+        response = requests.get(url, headers=HEADERS)
+        response.raise_for_status()  # Raise an exception for 4xx or 5xx status codes
 
-    # Extract the HTML source code from the response
-    html_source = response.text
-
-    return html_source
+        # Extract the HTML source code from the response
+        html_source = response.text
+        return html_source
+    except requests.RequestException as e:
+        print(f"Error fetching URL: {e}")
+        return None
 
 
 def extract(source_text):
@@ -46,16 +51,19 @@ def extract(source_text):
     Returns:
         list: A list containing extracted data based on the defined selectors.
     """
-    # Create an extractor object from the YAML configuration file
-    e = selectorlib.Extractor.from_yaml_file(YAML_FILE)
+    try:
+        # Create an extractor object from the YAML configuration file
+        e = selectorlib.Extractor.from_yaml_file(YAML_FILE)
 
-    # Extract data from the source text using the defined selectors
-    extracted_data = e.extract(source_text)
+        # Extract data from the source text using the defined selectors
+        extracted_data = e.extract(source_text)
 
-    # Select the specific key "tours" from the extracted data or [] as default if no data extracted
-    extracted_tours = extracted_data.get("tours", [])
-
-    return extracted_tours
+        # Select the specific key "tours" from the extracted data or [] as default if no data extracted
+        extracted_tours = extracted_data.get("tours", [])
+        return extracted_tours
+    except Exception as e:
+        print(f"Error extracting data: {e}")
+        return []
 
 
 def store_in_file(data):
@@ -69,27 +77,35 @@ def store_in_file(data):
         tuple: A tuple containing a boolean indicating success or failure (True for success, False for failure) 
                and an error message (if any).
     """
+ 
     try:
         # Check if the input data indicates no upcoming tours
-        if "No upcoming tours" in data:
+        if len(data) == 0:
             return False, "No upcoming tours"
 
-        # Check if the tours file exists
+        # Ensure parent directories exist, if not, create them
+        TOURS_FILE.parent.mkdir(parents=True, exist_ok=True)
+
+        # Create the file with specific content
         if not TOURS_FILE.exists():
-            # If the file doesn't exist, create it
-            with open(TOURS_FILE, 'w'):
-                pass  # Create an empty file
+            with open(TOURS_FILE, 'w') as json_file:
+                json_file.write('{"tours":[]}')  # {} means empty dict
+        
+        # Step 1: Open the JSON file and read its content
+        with open(TOURS_FILE, 'r') as json_file:
+            existing_data = json.load(json_file)
 
-        # Check if the tour data is already present in the file
-        with open(TOURS_FILE, 'r') as file:
-            file_content = file.read()
+        
+        
+        # Compare and add only the new tours to the existing data
+        for new_tour in data:
+            if new_tour not in existing_data['tours']:
+                existing_data['tours'].append(new_tour)
 
-        if data not in file_content:
-            # Append the formatted tour data to the tours file
-            with open(TOURS_FILE, 'a') as file:
-                file.write(data + '\n')
-        else:
-            return False, "Tour event already exists"
+        
+        # Save the updated content back to the JSON file
+        with open(TOURS_FILE, 'w') as json_file:
+            json.dump(existing_data, json_file, indent=4)
 
         # Return success (True) and no error message
         return True, None
@@ -158,19 +174,19 @@ def main():
         extracted_data = extract(scraped_data)
 
         # # Step 3: Call store function to save the tour data in a file
-        # success, message = store_in_file(extracted_data)
+        success, message = store_in_file(extracted_data)
 
         # Step 3: Call store function to save the tour data in a database
-        success, message = store_in_db(extracted_data)
+        # success, message = store_in_db(extracted_data)
 
         # Check if the tour data was saved successfully
         if success:
             logging.info("Tour data saved successfully.")
 
-            if send_email(extracted_data):
-                logging.info("Email sent successfully.")
-            else:
-                logging.error("Failed to send email. Please try again later.")
+            # if send_email(extracted_data):
+            #     logging.info("Email sent successfully.")
+            # else:
+            #     logging.error("Failed to send email. Please try again later.")
         else:
             logging.error(f"Tour data not saved. Reason: {message}")
     except Exception as e:
@@ -179,16 +195,16 @@ def main():
 
 # Entry point of the program
 if __name__ == "__main__":
-    # Get the start time in seconds since the epoch
-    start = time.time()
+    # Get the current time as start_time
+    start_time = datetime.now()
+
+    # Calculate end_time by adding the desired duration to start_time
+    duration = timedelta(seconds=DURATION)
+    end_time = start_time + duration
 
     # Loop until DURATION in seconds have passed as a trial of running program non-stop
     # we can also use automation on:  https://www.pythonanywhere.com/
-    while True:
-        # If the current time is more than DURATION in seconds ahead of the starting time, exit the loop
-        if time.time() > start + DURATION:
-            print(f"\n- Exiting Program: {DURATION} seconds have passed.\n")
-            break
+    while datetime.now() < end_time:
 
         # Call the main function
         main()
@@ -196,5 +212,8 @@ if __name__ == "__main__":
         # Pause execution for PAUSE seconds
         time.sleep(PAUSE)
 
-    # Finally close the database connection
-    connection.close()
+    print(f"\n- Exiting Program: {DURATION} seconds have passed.\n")
+
+    # # Finally close the database connection
+    # connection.close()
+    # main()
