@@ -33,7 +33,7 @@ def send_email(events):
     . More info:  {event.get('url')}
 
 """
-        
+
     # Create a SSL context for secure connection
     context = ssl.create_default_context()
 

@@ -78,9 +78,9 @@ def store_in_file(data):
         tuple: A tuple containing a boolean indicating success or failure (True for success, False for failure) 
                and an error message (if any).
     """
-    
+
     try:
-        
+
         # Check if the 'events' key exists in the input data
         if 'events' not in data or not data['events']:
             return False, "No upcoming events"
@@ -138,7 +138,7 @@ def store_in_db(data):
         # Check if the 'events' key exists in the input data
         if 'events' not in data or not data['events']:
             return False, "No upcoming events"
-        
+
         # Create the database file and connect to it
         if not DATABASE_FILE.exists():
             # If the database file doesn't exist, create it and establish a connection
@@ -212,4 +212,3 @@ if __name__ == "__main__":
 
     # Printing a message indicating the program is exiting and displaying the duration.
     print(f"\n--- The email containing today's musical event details has been successfully dispatched. ---\n")
-

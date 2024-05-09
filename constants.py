@@ -39,4 +39,3 @@ SMTP_PORT = 587
 SENDER = os.getenv("USER")
 PASSWORD = os.getenv("PASSWORD")
 RECEIVER = os.getenv("RECEIVER")
-

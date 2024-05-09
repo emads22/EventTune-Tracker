@@ -31,7 +31,8 @@ def send_email(events):
     email_message["Subject"] = EMAIL_SUBJECT
 
     # Initialize email content
-    email_content = f"- Musical events on today {events[0].get('date').split('-')[0].strip()}:\n\n"
+    email_content = f"- Musical events on today {
+        events[0].get('date').split('-')[0].strip()}:\n\n"
 
     # Iterate through the events
     for i, event in enumerate(events):
@@ -65,6 +66,3 @@ def send_email(events):
 
         # Return False indicating failure to send email
         return False
-
-
-
