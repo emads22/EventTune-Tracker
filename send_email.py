@@ -11,12 +11,15 @@ from constants import SMTP_HOST, SMTP_PORT, SENDER, PASSWORD, RECEIVER, EMAIL_SU
 handle_logging()
 
 
-def send_email(new_event):
+def send_email(events):
     """
-    Send an email notification about a new tour event.
+    Send an email notification about new events.
 
     Args:
-        new_event (str): A string containing information about the new tour in the format 'Band, City, Date'.
+        events (list): A list of dictionaries where each dictionary represents event data. Each event dictionary 
+                       should contain the following keys: 'artist' (str), 'location' (str), 'date' (str), and 
+                       'url' (str), representing the artist's name, event location, date of the event, and URL 
+                       for more information, respectively.
 
     Returns:
         bool: True if the email was successfully sent, False otherwise.
@@ -27,15 +30,22 @@ def send_email(new_event):
     # Set email subject
     email_message["Subject"] = EMAIL_SUBJECT
 
-    # Split the input data string into band, city, and date
-    band, city, date = new_event.split(',')
+    # Initialize email content
+    email_content = f"- Musical events on today {events[0].get('date').split('-')[0].strip()}:\n\n"
 
-    # Format the tour data into a readable format
-    formatted_data = f'- New tour event on {date.strip()} in {city.strip()}: {
-        band.strip()}'
+    # Iterate through the events
+    for i, event in enumerate(events):
+        # Format the event data into a readable format
+        email_content += f"""
+- Event {i+1}:
+    . Artist:  {event.get('artist')}
+    . Location:  {event.get('location')}
+    . Start Time:  {event.get('date')}
+    . More info:  {event.get('url')}
 
+"""
     # Set email content
-    email_message.set_content(formatted_data)
+    email_message.set_content(email_content)
 
     try:
         # Connect to the SMTP server
@@ -57,11 +67,4 @@ def send_email(new_event):
         return False
 
 
-if __name__ == "__main__":
 
-    test_file_path = Path("./assets") / "Tours" / "tours.txt"
-
-    if send_email(test_file_path):
-        print("\n--- Email sent successfully. ---\n")
-    else:
-        print("\n--- Failed to send email. Please try again later. ---\n")

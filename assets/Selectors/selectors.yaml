@@ -1,4 +1,6 @@
-tours:
+# SelectorLib YAML configuration file for extracting data from webpage, using selectorlib chrome plugin
+
+events:
     css: "a.HsqHp2xM2FkfSdjy1mlU"
     multiple: true
     type: Text

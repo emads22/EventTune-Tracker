@@ -1,31 +1,39 @@
 import smtplib
 import ssl
-from constants import SMTP_HOST, SMTP_PORT, SENDER, PASSWORD, RECEIVER
+from constants import SMTP_HOST, SMTP_PORT, SENDER, PASSWORD, RECEIVER, EMAIL_SUBJECT
 
 
-def send_email(new_event):
+def send_email(events):
     """
-    Send an email about a new tour event using SMTP_SSL protocol.
+    Send an email notification about new events.
 
     Args:
-        new_event (str): A string containing information about the new tour event.
-                        The string should be in the format 'band, city, date'.
-
-    Raises:
-        smtplib.SMTPException: If an error occurs during the SMTP communication.
+        events (list): A list of dictionaries where each dictionary represents event data. Each event dictionary 
+                       should contain the following keys: 'artist' (str), 'location' (str), 'date' (str), and 
+                       'url' (str), representing the artist's name, event location, date of the event, and URL 
+                       for more information, respectively.
 
     Returns:
-        None
+        bool: True if the email was successfully sent, False otherwise.
     """
-    # Split the input data string into tour name, city, and date
-    band, city, date = new_event.split(',')
+    # Initialize email content
+    email_content = f"""Subject: {EMAIL_SUBJECT}
 
-    # Format the tour data into a readable format with subject
-    subject = f'New Tour Event coming up!'
-    formatted_message = f"""Subject: {subject}
+- Musical events on today {events[0].get('date').split('-')[0].strip()}:\n\n
+"""
 
-- New tour event on {date.strip()} in {city.strip()}: {band.strip()}"""
+    # Iterate through the events
+    for i, event in enumerate(events):
+        # Format the event data into a readable format
+        email_content += f"""
+- Event {i+1}:
+    . Artist:  {event.get('artist')}
+    . Location:  {event.get('location')}
+    . Start Time:  {event.get('date')}
+    . More info:  {event.get('url')}
 
+"""
+        
     # Create a SSL context for secure connection
     context = ssl.create_default_context()
 
@@ -35,4 +43,4 @@ def send_email(new_event):
         server.login(SENDER, PASSWORD)
 
         # Send the email message
-        server.sendmail(SENDER, RECEIVER, formatted_message)
+        server.sendmail(SENDER, RECEIVER, email_content)

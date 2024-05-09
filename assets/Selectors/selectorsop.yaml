@@ -1,6 +1,0 @@
-# SelectorLib YAML configuration file for extracting data from webpage
-
-# Define the selector named "tours"
-tours:
-  # CSS selector used to select the element(s) containing tour information
-  css: '#displaytimer'
