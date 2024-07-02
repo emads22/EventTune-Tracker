@@ -19,6 +19,8 @@ The default website for scraping is [Bandsintown's Today page](https://www.bands
 - **python-dotenv**: For managing environment variables.
 - **requests**: For making HTTP requests to fetch web page data.
 - **selectorlib**: For extracting specific data from web pages.
+- **smtplib**: For sending email notifications.
+- **logging**: For tracking events that happen when the software runs.
 
 ## Setup
 1. Clone the repository.
