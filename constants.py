@@ -12,6 +12,7 @@ ASSETS_DIR = Path("./assets")
 YAML_FILE = ASSETS_DIR / "Selectors" / "selectors.yaml"
 EVENTS_FILE = ASSETS_DIR / "Musical Events" / "events.json"
 DATABASE_FILE = ASSETS_DIR / "Musical Events" / "events.db"
+LOG_FILE = ASSETS_DIR / "Logs" / "app.log"
 
 TABLE = "events"
 CREATE_TABLE_QUERY = f"""

@@ -1,7 +1,7 @@
 import logging
 from logging.handlers import RotatingFileHandler
 from pathlib import Path
-from constants import ASSETS_DIR
+from constants import LOG_FILE
 
 
 def handle_logging():
@@ -18,7 +18,7 @@ def handle_logging():
     log_format = '%(asctime)s - %(levelname)s - %(name)s - %(message)s'
 
     # Define the path to the log file: ASSETS_DIR/Logs/app.log
-    log_file = ASSETS_DIR / "Logs" / "app.log"
+    log_file = LOG_FILE
 
     try:
         # Ensure the directory for log files exists, create if not

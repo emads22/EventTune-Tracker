@@ -376,3 +376,7 @@
 2024-05-09 21:39:09,261 - INFO - root - Email sent successfully.
 2024-05-09 21:47:45,594 - INFO - root - Event data saved successfully.
 2024-05-09 21:47:47,497 - INFO - root - Email sent successfully.
+2024-07-02 11:24:37,559 - ERROR - root - Event data not saved. Reason: No upcoming events
+2024-07-02 11:25:46,740 - ERROR - root - Event data not saved. Reason: No upcoming events
+2024-07-02 11:33:52,868 - ERROR - root - Event data not saved. Reason: No upcoming events
+2024-07-02 11:35:12,916 - ERROR - root - Event data not saved. Reason: No upcoming events

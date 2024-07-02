@@ -195,7 +195,8 @@ def main():
             logging.info("Event data saved successfully.")
 
             if send_email(extracted_data['events']):
-                logging.info("Email sent successfully.")
+                logging.info("Today's music event details have been emailed successfully.")
+
             else:
                 logging.error("Failed to send email. Please try again later.")
         else:
@@ -210,5 +211,6 @@ if __name__ == "__main__":
     # Call the main function
     main()
 
-    # Printing a message indicating the program is exiting and displaying the duration.
-    print(f"\n--- The email containing today's musical event details has been successfully dispatched. ---\n")
+    # Printing a message indicating the program has finished execution.
+    print(f'\n--- The program has finished execution. Please check the log file in "{str(LOG_FILE)}" for more details. ---\n')
+

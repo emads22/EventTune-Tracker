@@ -1,7 +1,7 @@
-# Music Event Data Scraper
+# EventTune Tracker
 
 ## Overview
-The Music Event Data Scraper is a Python application designed to scrape HTML source code from websites, extract music event data, and store it for further use. It utilizes the `requests` library for web scraping, SelectorLib for data extraction, and supports storing data in either files or SQLite databases. The application also includes features for error handling, logging, and email notification upon successful data processing.
+EventTune Tracker is a Python application designed to scrape HTML source code from a specific website, extract music event data, and store it for further use. It utilizes the `requests` library for web scraping, `SelectorLib` for data extraction, and supports storing data in either files or SQLite databases. The application also includes features for error handling, logging, and email notification upon successful data processing.
 
 The default website for scraping is [Bandsintown's Today page](https://www.bandsintown.com/today/genre/all-genres?recommended_artists_filter=All+Artists#search), which provides information about music events happening today across various genres. Users can customize the scraping behavior by modifying the SelectorLib YAML file and configure storage options in the `constants.py` file.
 
@@ -14,6 +14,11 @@ The default website for scraping is [Bandsintown's Today page](https://www.bands
 - **Email Notification**: Sends email notifications upon successful data processing.
 - **Modular Design**: Separates concerns into different functions for improved readability and maintainability.
 - **Documentation**: Includes clear docstrings for functions to explain their purpose and parameters.
+
+## Technologies Used
+- **python-dotenv**: For managing environment variables.
+- **requests**: For making HTTP requests to fetch web page data.
+- **selectorlib**: For extracting specific data from web pages.
 
 ## Setup
 1. Clone the repository.
