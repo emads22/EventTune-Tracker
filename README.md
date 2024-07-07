@@ -1,5 +1,7 @@
 # EventTune Tracker
 
+![EventTune_Tracker_logo](./assets/Images/EventTune_Tracker_logo.png)
+
 ## Overview
 EventTune Tracker is a Python application designed to scrape HTML source code from a specific website, extract music event data, and store it for further use. It utilizes the `requests` library for web scraping, `SelectorLib` for data extraction, and supports storing data in either files or SQLite databases. The application also includes features for error handling, logging, and email notification upon successful data processing.
 

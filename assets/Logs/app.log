@@ -380,3 +380,5 @@
 2024-07-02 11:25:46,740 - ERROR - root - Event data not saved. Reason: No upcoming events
 2024-07-02 11:33:52,868 - ERROR - root - Event data not saved. Reason: No upcoming events
 2024-07-02 11:35:12,916 - ERROR - root - Event data not saved. Reason: No upcoming events
+2024-07-07 15:31:59,129 - INFO - root - Event data saved successfully.
+2024-07-07 15:32:00,841 - INFO - root - Today's music event details have been emailed successfully.
