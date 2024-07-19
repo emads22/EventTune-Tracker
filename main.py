@@ -177,6 +177,10 @@ def main():
 
     This function initiates the scraping process, extracts event data, and stores it in a file or SQL database.
     """
+
+    # Display logo
+    print("\n\n\n\n", ASCII_ART, "\n\n")
+    
     try:
         # Step 1: Scrape data from the specified URL
         scraped_data = scrape(URL)
